@@ -1,6 +1,6 @@
 ---
 title: "R4DS Assignment1"
-output: html_notebook
+output: rmarkdown::github_document
 ---
 Group members:  
   Sihan Liu  
