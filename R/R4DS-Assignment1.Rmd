@@ -1,0 +1,106 @@
+---
+title: "R4DS Assignment1"
+output: html_notebook
+        keep_md: true
+---
+Group members:  
+  Sihan Liu  
+  Diksha Motwani  
+  Jing Ouyang  
+  Haohao Xu  
+  Ruilin Ye  
+
+
+###5.2.1 Find all flights that
+```{r}
+#install.packages("tidyverse")
+#install.packages(c("nycflights13", "gapminder", "Lahman"))
+library(nycflights13)
+library(tidyverse)
+```
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+1. Had an arrival delay of two or more hours
+```{r}
+filter(flights, arr_delay >= 120)
+```
+
+2. Flew to Houston (`IAH` or `HOU`)
+```{r}
+filter(flights, dest == "IAH" | dest == "HOU")
+```
+
+3. Were operated by United, American, or Delta
+```{r}
+filter(flights, carrier %in% c("AA", "DL", "UA"))
+```
+
+4. Departed in summer (July, August, and September)
+```{r}
+filter(flights, month %in% 7:9)
+```
+
+5. Arrived more than two hours late, but didn't leave late
+```{r}
+filter(flights, arr_delay > 120, dep_delay <= 0)
+```
+
+6. Were delayed by at least an hour, but made up over 30 minutes in flight
+```{r}
+filter(flights, dep_delay >= 60, dep_delay - arr_delay > 30)
+```
+
+7. Departed between midnight and 6am (inclusive)
+```{r}
+filter(flights, dep_time <= 600 | dep_time == 2400)
+```
+
+###5.2.3 How many flights have a missing `dep_time`? What other variables are missing? What might these rows represent?
+```{r}
+filter(flights, is.na(dep_time))
+```
+The arrival time variable `arr_time` is also missing. These rows might represent cancelled flights.   
+
+###5.3.2 Sort `flights` to find the most delayed flights. Find the flights that left earliest.
+```{r}
+arrange(flights, desc(dep_delay))
+```
+
+the flights that left earliest: 
+```{r}
+arrange(flights, dep_delay)
+```
+
+###5.5.2 Compare `air_time` with `arr_time - dep_time`. What do you expect to see? What do you see? What do you need to do to fix it?
+```{r}
+flights_airtime <-
+  mutate(flights,
+    arr_time = (arr_time %/% 100 * 60 + arr_time %% 100) %% 1440,
+    dep_time = (dep_time %/% 100 * 60 + dep_time %% 100) %% 1440,
+    air_time_diff = air_time - arr_time + dep_time
+  )
+nrow(filter(flights_airtime, air_time_diff != 0))
+```
+
+We expect those two sets of variables have identical values respectively, which is not true in 327150 cases. This might be caused by flights passing midnight or crossing time zones (might be fixed by convering time to `UTC`)   
+
+Another reason is that these two variables have different definition for time period.  
+
+###5.5.5 What does `1:3 + 1:10` return? Why?
+```{r}
+1:3 + 1:10
+```
+the command above is equivelent to adding two list below together:   
+1 1  
+2 2  
+3 3  
+1 4  
+2 5  
+3 6  
+1 7  
+2 8  
+3 9  
+1 10  
+This is because when adding two vectors recycles the shorter vector’s values to get vectors of the same length.
+

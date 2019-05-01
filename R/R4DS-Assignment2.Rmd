@@ -1,0 +1,63 @@
+------
+##title: "R4DS Assignment2"   
+output: html_notebook   
+        keep_md: true   
+------
+##Group members:  
+  Sihan Liu  
+  Diksha Motwani  
+  Jing Ouyang  
+  Haohao Xu  
+  Ruilin Ye  
+
+
+###3.2.5 What happens if you make a scatterplot of `class` vs `drv`? Why is the plot not useful?
+
+```{r}
+library("tidyverse")
+```
+
+```{r}
+ggplot(mpg, aes(x = class, y = drv)) + geom_point()
+```
+A scatter plot is not a useful display of these variables since both drv and class are categorical variables.
+
+###3.3.2 Which variables in `mpg` are categorical? Which variables are continuous? (Hint: type `?mpg` to read the documentation for the dataset). How can you see this information when you run `mpg`?
+
+
+The following list contains the categorical variables in mpg.
+
+    model
+    trans
+    drv
+    fl
+    class
+
+The following list contains the continuous variables in mpg.
+
+    displ
+    year
+    cyl
+    cty
+    hwy
+    
+```{r}
+mpg
+```
+
+Those with <chr> above their columns are categorical, while those with <dbl> or <int> are continuous. 
+
+###3.6.1 What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?
+
+
+    line chart: `geom_line()`
+    boxplot: `geom_boxplot()`
+    histogram: `geom_hist()`
+    area chart: `geom_area()`
+
+###4.3 Press Alt + Shift + K. What happens? How can you get to the same place using the menus?
+
+This gives a menu with keyboard shortcuts. This can be found in the menu under `Tools -> Keyboard Shortcuts Help`.
+
+
+
