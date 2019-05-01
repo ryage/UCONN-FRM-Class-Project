@@ -46,10 +46,6 @@ namespace CC
                         mx = m[j, i];
                         row = j;
                     }
-
-
-
-
                     if (i != row)
                     {
                         for (int k = 0; k < n; k++)
